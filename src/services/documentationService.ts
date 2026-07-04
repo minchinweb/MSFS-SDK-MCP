@@ -17,10 +17,10 @@ export interface DocumentationContent {
 }
 
 export class MSFSDocumentationService {
-  private baseUrl = 'https://docs.flightsimulator.com';
+  private baseUrl = 'https://docs.flightsimulator.com/msfs2024';
 
   // Base search URL using the website's search functionality
-  private searchBaseUrl = 'https://docs.flightsimulator.com/html/Introduction/Introduction.htm';
+  private searchBaseUrl = 'https://docs.flightsimulator.com/msfs2024/html/1_Introduction/Introduction.htm';
 
   // Available categories with their corresponding agt parameters
   private categories = {
@@ -559,7 +559,7 @@ export class MSFSDocumentationService {
     };
 
     const items = categoryData[category as keyof typeof categoryData];
-    
+
     return {
       content: [
         {
