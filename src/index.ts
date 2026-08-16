@@ -18,6 +18,7 @@ class MSFSSDKServer {
       {
         name: 'msfs-sdk-mcp',
         version: '1.0.0',
+        description: 'Microsoft Flight Simulator 2024 SDK MCP',
       },
       {
         capabilities: {
@@ -36,13 +37,13 @@ class MSFSSDKServer {
         tools: [
           {
             name: 'search_msfs_docs',
-            description: 'Search MSFS SDK documentation for specific topics',
+            description: 'Search MSFS 2024 SDK documentation for specific topics',
             inputSchema: {
               type: 'object',
               properties: {
                 query: {
                   type: 'string',
-                  description: 'Search query for MSFS SDK documentation',
+                  description: 'Search query for MSFS 2024 SDK documentation',
                 },
                 category: {
                   type: 'string',
@@ -62,7 +63,7 @@ class MSFSSDKServer {
           },
           {
             name: 'get_doc_content',
-            description: 'Get detailed content from a specific MSFS SDK documentation page',
+            description: 'Get detailed content from a specific MSFS 2024 SDK documentation page',
             inputSchema: {
               type: 'object',
               properties: {
@@ -175,6 +176,12 @@ class MSFSSDKServer {
 
               case 'list_categories':
                 return await this.documentationService.listCategories();
+
+              case 'list_category_items':
+                if (!parsedCommand.arguments.category) {
+                  throw new Error('Category parameter is required');
+                }
+                return await this.documentationService.listCategoryItems(String(parsedCommand.arguments.category));
 
               default:
                 throw new Error(`Unknown parsed tool: ${parsedCommand.tool}`);
