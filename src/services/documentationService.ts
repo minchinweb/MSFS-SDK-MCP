@@ -57,7 +57,7 @@ export class MSFSDocumentationService {
         searchUrl += `&agt=${agtParam}`;
       }
 
-      console.log(`Searching MSFS docs: ${searchUrl}`);
+      console.error(`Searching MSFS docs: ${searchUrl}`);
 
       const response = await fetch(searchUrl, {
         headers: {
@@ -72,17 +72,17 @@ export class MSFSDocumentationService {
       const html = await response.text();
       const $ = cheerio.load(html);
 
-      console.log(`Search page loaded, length: ${html.length}`);
+      console.error(`Search page loaded, length: ${html.length}`);
 
       // Extract search results from the page
       const searchResults: DocumentationResult[] = [];
 
-      console.log('Analyzing HTML structure for search results...');
+      console.error('Analyzing HTML structure for search results...');
 
       // Debug: Log some of the HTML to understand the structure
       const bodyText = $('body').text();
       if (bodyText.includes('result(s) found')) {
-        console.log('Found search results indicator in page');
+        console.error('Found search results indicator in page');
       }
 
       // Try multiple approaches to find search results
@@ -134,19 +134,19 @@ export class MSFSDocumentationService {
               category: categoryFromPath
             });
 
-            console.log(`Found result via ${selector}: ${text.substring(0, 50)}...`);
+            console.error(`Found result via ${selector}: ${text.substring(0, 50)}...`);
           }
         });
 
         if (searchResults.length > 0) {
-          console.log(`Found ${searchResults.length} results using selector: ${selector}`);
+          console.error(`Found ${searchResults.length} results using selector: ${selector}`);
           break;
         }
       }
 
       // If no structured results found, fall back to all links
       if (searchResults.length === 0) {
-        console.log('No structured results found, trying all links...');
+        console.error('No structured results found, trying all links...');
 
         $('a[href*=".htm"]').each((i, elem) => {
           if (searchResults.length >= limit) return false;
